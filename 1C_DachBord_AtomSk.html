@@ -1,0 +1,34 @@
+<head>
+    <meta charset="utf-8" />
+    <script src="http://localhost/AtomSkills/scripts/webclient1ce.js"></script>
+</head>
+<body onload="init();">
+    <div id="webClientContainer"></div>
+    <button onclick="messageToWebClient();">Сообщение веб-клиенту</button>
+    <div id="webClientMessageArea"></div>
+    <script>
+        var webClient = null;
+        var onWebClientMessage = function (message, origin) {
+            if (origin === 'http://localhost/') {
+                    document.querySelector('#webClientMessageArea').innerText = message;
+                }
+            };
+        var messageToWebClient = function () {
+            webClient.postMessage("Это пример веб-дашборда");
+        };
+        var init = function () {
+            webClient = new WebClient1CE('webClientContainer',
+            {
+                webClientURL: 'http://localhost/AtomSkills/?MainWindowMode=EmbeddedWorkplace',
+                width: '600px',
+                height: '400px',
+                events:
+                {
+                    onMessage: onWebClientMessage
+                }
+            });
+        };
+    </script>
+</body>
+</html>
+
